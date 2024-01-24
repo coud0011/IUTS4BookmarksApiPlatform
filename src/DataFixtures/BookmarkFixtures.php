@@ -10,6 +10,11 @@ class BookmarkFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        BookmarkFactory::createMany(20);
+        BookmarkFactory::createSequence(
+            json_decode(
+                file_get_contents(__DIR__.'/data/bookmarks.json'),
+                true
+            )
+        );
     }
 }
