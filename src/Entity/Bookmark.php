@@ -13,9 +13,13 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BookmarkRepository::class)]
 #[ApiResource(order: ['name' => 'ASC'])]
-#[ApiFilter(OrderFilter::class, properties: ['creationDate', 'name'], arguments: ['orderParameterName' => 'order'])]
+#[ApiFilter(
+    OrderFilter::class,
+    properties: ['creationDate', 'name'],
+    arguments: ['orderParameterName' => 'order']
+)]
 #[ApiFilter(BooleanFilter::class, properties: ['isPublic'])]
-#[ApiFilter(SearchFilter::class, properties: ['name' => 'exact', 'description' => 'exact'])]
+#[ApiFilter(SearchFilter::class, properties: ['name' => 'partial', 'description' => 'partial'])]
 class Bookmark
 {
     #[ORM\Id]
