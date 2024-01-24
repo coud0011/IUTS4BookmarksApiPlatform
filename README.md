@@ -11,3 +11,7 @@ composer install
 ```bash
 composer start
 ```
+- Pour lancer les tests
+```bash
+composer test
+```

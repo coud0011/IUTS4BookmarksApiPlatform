@@ -70,6 +70,15 @@
         "start": [
             "Composer\\Config::disableProcessTimeout",
             "symfony serve"
+        ],
+        "test:cs": [
+            "php-cs-fixer fix --dry-run"
+        ],
+        "fix:cs": [
+            "php-cs-fixer fix"
+        ],
+        "test": [
+            "@test:cs"
         ]
     },
     "conflict": {
@@ -82,6 +91,10 @@
         }
     },
     "scripts-descriptions": {
-        "start": "Run server!"
+        "start": "Run server!",
+        "test": "Run tests"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.48"
     }
 }
