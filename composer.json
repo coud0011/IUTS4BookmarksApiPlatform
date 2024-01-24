@@ -79,6 +79,12 @@
         ],
         "test": [
             "@test:cs"
+        ],
+        "db": [
+            "php bin/console doctrine:database:drop --force",
+            "php bin/console doctrine:database:create",
+            "php bin/console doctrine:migrations:migrate --no-interaction",
+            "php bin/console doctrine:fixtures:load --no-interaction"
         ]
     },
     "conflict": {
@@ -92,10 +98,13 @@
     },
     "scripts-descriptions": {
         "start": "Run server!",
-        "test": "Run tests"
+        "test": "Run tests",
+        "db": "Initialize db"
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^3.5",
         "friendsofphp/php-cs-fixer": "^3.48",
-        "symfony/maker-bundle": "^1.52"
+        "symfony/maker-bundle": "^1.52",
+        "zenstruck/foundry": "^1.36"
     }
 }
