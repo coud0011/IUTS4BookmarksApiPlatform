@@ -61,11 +61,6 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
     /**
      * Override to control what happens when the user hits a secure page
      * but isn't logged in yet.
-     *
-     * @param Request $request
-     * @param AuthenticationException|null $authException
-     * @return RedirectResponse
-     *
      */
     public function start(Request $request, AuthenticationException $authException = null): RedirectResponse
     {
@@ -79,5 +74,4 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
         return new RedirectResponse($url);
     }
-
 }
