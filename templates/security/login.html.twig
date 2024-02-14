@@ -32,7 +32,7 @@
                 <i class="zmdi zmdi-eye"></i>
                 </span>
                     <label>
-                        <input class="input100" type="password" name="pass" placeholder="Password">
+                        <input class="input100" type="password" name="password" placeholder="Password">
                     </label>
                 </div>
                 <div class="container-login100-form-btn">
@@ -47,14 +47,6 @@
                     <input type="checkbox" name="_remember_me" checked  class="txt1">
                     Keep me logged in
                 </label>
-                <div class="text-center p-t-115">
-                    <span class="txt1">
-                    Don’t have an account?
-                    </span>
-                    <a class="txt2" href="{{ path('app_signin') }}">
-                        Sign Up
-                    </a>
-                </div>
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
             </form>
         </div>
