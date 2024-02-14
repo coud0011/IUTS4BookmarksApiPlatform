@@ -2,42 +2,62 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
 use App\Repository\UserRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ApiResource(operations: [
+    new Get(),
+    new GetCollection(),
+    new Patch(),
+], normalizationContext: ['groups' => ['User_read']],
+    denormalizationContext: ['groups' => ['User_write']])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups('User_read')]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Groups(['User_read', 'User_write'])]
     private ?string $login = null;
 
     #[ORM\Column]
     private array $roles = [];
 
     /**
-     * @var string The hashed password
+     * @var ?string The hashed password
      */
     #[ORM\Column]
+    #[Groups('User_write')]
     private ?string $password = null;
 
     #[ORM\Column(length: 30)]
+    #[Groups(['User_read', 'User_write'])]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 40)]
+    #[Groups(['User_read', 'User_write'])]
     private ?string $lastname = null;
 
     #[ORM\Column(type: Types::BLOB)]
-    private $avatar = null;
+    /**
+     * @var resource
+     */
+    private $avatar;
 
     #[ORM\Column(length: 100)]
+    #[Groups('User_write')]
     private ?string $email = null;
 
     public function getId(): ?int
