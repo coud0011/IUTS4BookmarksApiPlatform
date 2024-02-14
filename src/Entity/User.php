@@ -19,7 +19,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
     new GetCollection(),
     new Patch(),
 ], normalizationContext: ['groups' => ['User_read']],
-    denormalizationContext: ['groups' => ['User_write']])]
+    denormalizationContext: ['groups' => ['User_write']],
+    security: "is_granted('ROLE_USER')")]
+#[Get]
+#[Patch(security: "is_granted('ROLE_USER')")]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
