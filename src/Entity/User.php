@@ -6,6 +6,7 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Patch;
 use App\Repository\UserRepository;
+use App\State\MeProvider;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -19,8 +20,30 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[Get]
 #[Patch(
     normalizationContext: ['groups' => ['User_read', 'User_me']],
-    security: "is_granted('ROLE_USER') and user == object"
+    security: 'user == object'
 )]
+#[Get(
+    uriTemplate: '/me',
+    openapiContext: [
+        'summary' => 'Retrieves the connected user',
+        'description' => 'Retrieves the connected user',
+        'responses' => [
+            '200' => [
+                'description' => 'connected user resource',
+                'content' => [
+                    'application/ld+json' => [
+                        'schema' => [
+                            '$ref' => '#/components/schemas/User.jsonld-User_me_User_read',
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
+    normalizationContext: ['groups' => ['User_read', 'User_me']],
+    provider: MeProvider::class
+)
+]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
