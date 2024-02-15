@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Patch;
@@ -10,9 +11,11 @@ use App\Repository\UserRepository;
 use App\State\MeProvider;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(
     normalizationContext: ['groups' => ['User_read']],
@@ -71,6 +74,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     ]
 )]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[UniqueEntity('login')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -81,6 +85,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 180, unique: true)]
     #[Groups(['User_read', 'User_write'])]
+    #[Assert\Regex('/^\w+\&\<\>\"/')]
+    #[ApiProperty(
+        openapiContext: [
+            'example' => 'user1',
+        ]
+    )]
     private ?string $login = null;
 
     #[ORM\Column]
@@ -95,10 +105,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 30)]
     #[Groups(['User_read', 'User_write'])]
+    #[Assert\Regex('/^\w+\&\<\>\"/')]
+    #[ApiProperty(
+        openapiContext: [
+            'example' => 'Axel',
+        ]
+    )]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 40)]
     #[Groups(['User_read', 'User_write'])]
+    #[Assert\Regex('/^\w+\&\<\>\"/')]
+    #[ApiProperty(
+        openapiContext: [
+            'example' => 'Coudrot',
+        ]
+    )]
     private ?string $lastname = null;
 
     #[ORM\Column(type: Types::BLOB)]
@@ -109,6 +131,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 100)]
     #[Groups(['User_write', 'User_me'])]
+    #[Assert\Email(
+        message: 'The email {{ value }} is not a valid email.',
+    )]
     private ?string $email = null;
 
     public function getId(): ?int
