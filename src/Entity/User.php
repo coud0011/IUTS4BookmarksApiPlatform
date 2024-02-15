@@ -5,6 +5,7 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Patch;
+use App\Controller\GetAvatarController;
 use App\Repository\UserRepository;
 use App\State\MeProvider;
 use Doctrine\DBAL\Types\Types;
@@ -44,6 +45,31 @@ use Symfony\Component\Serializer\Annotation\Groups;
     provider: MeProvider::class
 )
 ]
+#[Get(
+    uriTemplate: '/users/{id}/avatar',
+    formats: [
+        'png' => 'image/png',
+    ],
+    controller: GetAvatarController::class,
+    openapiContext: [
+        'responses' => [
+            '200' => [
+                'description' => 'The user avatar',
+                'content' => [
+                    'image/png' => [
+                        'schema' => [
+                            'type' => 'string',
+                            'format' => 'binary',
+                        ],
+                    ],
+                ],
+            ],
+            '404' => [
+                'description' => 'User does not exist',
+            ],
+        ],
+    ]
+)]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
