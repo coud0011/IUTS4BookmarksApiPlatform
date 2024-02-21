@@ -17,6 +17,7 @@ class BookmarkGetCest
             'creationDate' => 'string:date',
             'isPublic' => 'boolean',
             'url' => 'string:url',
+            'ratings' => 'array',
         ];
     }
 
