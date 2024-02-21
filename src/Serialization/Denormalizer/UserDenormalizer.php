@@ -20,7 +20,7 @@ class UserDenormalizer implements DenormalizerInterface, DenormalizerAwareInterf
     {
     }
 
-    public function denormalize(mixed $data, string $type, ?string $format = null, array $context = [])
+    public function denormalize(mixed $data, string $type, string $format = null, array $context = [])
     {
         $context[self::ALREADY_CALLED] = true;
         if (isset($data['password'])) {
@@ -32,7 +32,7 @@ class UserDenormalizer implements DenormalizerInterface, DenormalizerAwareInterf
         return $this->denormalizer->denormalize($data, $type, $format, $context);
     }
 
-    public function supportsDenormalization(mixed $data, string $type, ?string $format = null, array $context = []): bool
+    public function supportsDenormalization(mixed $data, string $type, string $format = null, array $context = []): bool
     {
         return !isset($context[self::ALREADY_CALLED]) && User::class === $type;
     }
