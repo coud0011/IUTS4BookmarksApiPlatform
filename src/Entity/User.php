@@ -18,12 +18,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(
-    normalizationContext: ['groups' => ['User_read']],
-    denormalizationContext: ['groups' => ['User_write']]
+    normalizationContext: ['groups' => ['User_read']]
 )]
 #[Get]
 #[Patch(
     normalizationContext: ['groups' => ['User_read', 'User_me']],
+    denormalizationContext: ['groups' => ['User_write']],
     security: 'user == object'
 )]
 #[Get(
@@ -85,7 +85,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 180, unique: true)]
     #[Groups(['User_read', 'User_write'])]
-    #[Assert\Regex('/^\w+\&\<\>\"/')]
+    #[Assert\Regex('/^[^<>&"]*\w+$/')]
     #[ApiProperty(
         openapiContext: [
             'example' => 'user1',
@@ -105,7 +105,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 30)]
     #[Groups(['User_read', 'User_write'])]
-    #[Assert\Regex('/^\w+\&\<\>\"/')]
+    #[Assert\Regex('/^[^<>&"]*\w+$/')]
     #[ApiProperty(
         openapiContext: [
             'example' => 'Axel',
@@ -115,7 +115,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 40)]
     #[Groups(['User_read', 'User_write'])]
-    #[Assert\Regex('/^\w+\&\<\>\"/')]
+    #[Assert\Regex('/^[^<>&"]*\w+$/')]
     #[ApiProperty(
         openapiContext: [
             'example' => 'Coudrot',
