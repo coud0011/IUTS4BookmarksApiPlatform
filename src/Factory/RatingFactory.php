@@ -29,17 +29,11 @@ use Zenstruck\Foundry\RepositoryProxy;
  */
 final class RatingFactory extends ModelFactory
 {
-    /**
-     * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
-     */
     public function __construct()
     {
         parent::__construct();
     }
 
-    /**
-     * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories
-     */
     protected function getDefaults(): array
     {
         return [
@@ -49,18 +43,9 @@ final class RatingFactory extends ModelFactory
         ];
     }
 
-    /**
-     * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#initialization
-     */
-    protected function initialize(): self
-    {
-        return $this
-            // ->afterInstantiate(function(Rating $rating): void {})
-        ;
-    }
-
     protected static function getClass(): string
     {
         return Rating::class;
     }
+
 }
