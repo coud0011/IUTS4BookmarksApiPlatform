@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
-#[ORM\Entity(repositoryClass: RatingRepository::class)]
 #[ApiResource]
+#[ORM\Entity(repositoryClass: RatingRepository::class)]
 #[UniqueEntity(
     fields: ['bookmark', 'user'],
     message: 'This bookmark has already been rated by this user.',

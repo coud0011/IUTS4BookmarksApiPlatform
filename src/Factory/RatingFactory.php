@@ -47,5 +47,4 @@ final class RatingFactory extends ModelFactory
     {
         return Rating::class;
     }
-
 }

@@ -40,9 +40,10 @@ security:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/api$, roles: PUBLIC_ACCESS }
-        - { path: ^/api/bookmarks, roles: PUBLIC_ACCESS }
-        - { path: ^/api/users/\d+$, roles: PUBLIC_ACCESS }
-        - { path: ^/api/users/\d+/avatar$, roles: PUBLIC_ACCESS}
+        - { path: ^/api/bookmarks, roles: PUBLIC_ACCESS, method: GET }
+        - { path: ^/api/ratings, roles: PUBLIC_ACCESS, method: GET }
+        - { path: ^/api/users/\d+$, roles: PUBLIC_ACCESS, method: GET }
+        - { path: ^/api/users/\d+/avatar$, roles: PUBLIC_ACCESS, method: GET}
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
 
 when@test:
