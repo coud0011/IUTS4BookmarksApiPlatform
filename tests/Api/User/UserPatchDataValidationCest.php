@@ -119,7 +119,7 @@ class UserPatchDataValidationCest
             ],
             [
                 'property' => 'email',
-                'value' => 'badmail',
+                'value' => 'bad mail',
             ],
             [
                 'property' => 'email',

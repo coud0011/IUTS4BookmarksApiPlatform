@@ -8,12 +8,14 @@ use App\Repository\RatingRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: RatingRepository::class)]
 #[ApiResource]
 #[UniqueEntity(
     fields: ['bookmark', 'user'],
     message: 'This bookmark has already been rated by this user.',
+    errorPath: 'bookmark',
 )]
 class Rating
 {
@@ -41,6 +43,8 @@ class Rating
     private ?User $user = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
+    #[Assert\LessThan(11)]
+    #[Assert\GreaterThan(-1)]
     private ?int $value = null;
 
     public function getId(): ?int
