@@ -8,13 +8,13 @@ use App\Tests\Support\ApiTester;
 
 class RatingGetCest
 {
-    public function anonymousAccessRatingListTest(ApiTester $I): void
+    public function anonymousCanAccessRatingList(ApiTester $I): void
     {
         $I->sendGet('/api/ratings');
         $I->seeResponseCodeIsSuccessful();
     }
 
-    public function anonymousAccessRatingDetailsTest(ApiTester $I): void
+    public function anonymousCanAccessRating(ApiTester $I): void
     {
         RatingFactory::createOne();
 

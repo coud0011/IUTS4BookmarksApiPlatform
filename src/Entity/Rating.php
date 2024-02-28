@@ -4,13 +4,28 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
 use App\Repository\RatingRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource]
+#[Get]
+#[Post]
+#[GetCollection]
+#[Put]
+#[Delete]
+#[Patch(
+    security: "object.getUser() == user",
+)]
 #[ORM\Entity(repositoryClass: RatingRepository::class)]
 #[UniqueEntity(
     fields: ['bookmark', 'user'],
@@ -42,6 +57,11 @@ class Rating
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+    #[ApiProperty(
+        openapiContext: [
+            'example' => 1,
+        ]
+    )]
     #[ORM\Column(type: Types::SMALLINT)]
     #[Assert\LessThan(11)]
     #[Assert\GreaterThan(-1)]

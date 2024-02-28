@@ -33,11 +33,6 @@ final class UserFactory extends ModelFactory
 {
     private mixed $passwordHasher;
 
-    /**
-     * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
-     *
-     * @todo inject services if required
-     */
     public function __construct(UserPasswordHasherInterface $passwordHasher)
     {
         parent::__construct();
@@ -45,9 +40,6 @@ final class UserFactory extends ModelFactory
         $this->passwordHasher = $passwordHasher;
     }
 
-    /**
-     * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories
-     */
     protected function getDefaults(): array
     {
         $firstname = self::faker()->firstName();
@@ -70,9 +62,6 @@ final class UserFactory extends ModelFactory
         ];
     }
 
-    /**
-     * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#initialization
-     */
     protected function initialize(): self
     {
         return $this
